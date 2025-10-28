@@ -1,0 +1,69 @@
+<div class="properties-app">
+  <style>
+    /* estilos compartilhados com index, adaptados para a página de detalhe */
+    .properties-app{max-width:1100px;margin:32px auto;padding:0 16px;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;color:#111827}
+    .hero{background:linear-gradient(135deg,#eef2ff 0%, #ffffff 100%);padding:20px;border-radius:12px;box-shadow:0 4px 18px rgba(15,23,42,0.04)}
+    .hero-inner h1{margin:0;font-size:24px}
+    .hero-inner .lead{margin:6px 0 0;color:#6b7280}
+    /* <-- changed: make property-details the same width as hero (100% of .properties-app) */
+    main.property-details{width:100%;margin:18px 0 0;background:#fff;padding:20px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.04);box-sizing:border-box}
+    main.property-details h3{margin-top:0;color:#111827}
+    .detail-row{display:flex;gap:12px;flex-wrap:wrap}
+    .detail-col{flex:1 1 220px;min-width:180px}
+    .card-price{font-weight:700;font-size:18px;color:#111827}
+    .card-status{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;margin-left:8px}
+    .card-status.available{background:#ecfdf5;color:#065f46}
+    .card-status.reserved{background:#fff7ed;color:#92400e}
+    .card-status.sold{background:#fff1f2;color:#9f1239}
+    /* buttons */
+    .btn{padding:10px 14px;border-radius:8px;border:1px solid transparent;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+    .btn.primary{background:#2563eb;color:#fff}
+    .btn.ghost{background:transparent;border-color:#e6e9ef;color:#111827}
+    .actions-row{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}
+    /* small responsive tweaks */
+    @media (max-width:520px){.detail-row{flex-direction:column}}
+  </style>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <h1><%= @property.title %></h1>
+      <p class="lead"><%= @property.city %> — <%= @property.state %></p>
+      <div style="margin-top:12px">
+        <span class="card-price" style="font-size:18px"><%= number_to_currency(@property.price_cents.to_i / 100.0, unit: "R$ ", separator: ",", delimiter: ".") %></span>
+        <span class="card-status <%= @property.status %>" style="margin-left:12px"><%= @property.status %></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="property-details">
+    <section>
+      <h3>Endereço</h3>
+      <p><%= @property.address %><br/><%= @property.zip %></p>
+
+      <h3>Detalhes</h3>
+      <div class="detail-row">
+        <div class="detail-col">
+          <strong>Estado:</strong> <%= @property.state %>
+        </div>
+        <div class="detail-col">
+          <strong>Cidade:</strong> <%= @property.city %>
+        </div>
+        <div class="detail-col">
+          <strong>Preço:</strong> <%= number_to_currency(@property.price_cents.to_i / 100.0, unit: "R$ ", separator: ",", delimiter: ".") %>
+        </div>
+        <div class="detail-col">
+          <strong>Status:</strong> <%= @property.status %>
+        </div>
+        <div class="detail-col">
+          <strong>Proprietário:</strong> <%= @property.owner&.name || '-' %>
+        </div>
+      </div>
+    </section>
+
+    <div class="actions-row">
+      <%= link_to 'Editar', edit_property_path(@property), class: 'btn primary' %>
+      <%= link_to 'Voltar', properties_path, class: 'btn ghost' %>
+      <%= button_to 'Remover', property_path(@property), method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn', form_class: 'inline' %>
+    </div>
+  </main>
+</div>

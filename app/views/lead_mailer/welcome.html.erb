@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Hello <%= (defined?(lead) ? lead.name : @lead&.name) %>,</h1>
+    <p>Welcome! Thanks for getting in touch.</p>
+
+    <h1>Lead#welcome</h1>
+
+    <p>
+      <%= @greeting %>, find me in app/views/lead_mailer/welcome.html.erb
+    </p>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<div class="properties-app">
+  <style>
+    /* formulário e layout para edição */
+    .properties-app{max-width:1100px;margin:32px auto;padding:0 16px;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;color:#111827}
+    .hero{background:linear-gradient(135deg,#eef2ff 0%, #ffffff 100%);padding:18px;border-radius:12px;box-shadow:0 4px 18px rgba(15,23,42,0.04)}
+    .hero-inner h1{margin:0;font-size:20px}
+    .hero-inner .lead{color:#6b7280;margin:6px 0 0}
+    /* <-- changed: make form-area the same width as hero (100% of .properties-app) */
+    main.form-area{width:100%;background:#fff;padding:18px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.04);box-sizing:border-box;margin-top:16px}
+    .field-input{width:100%;padding:10px 12px;border:1px solid #e6e9ef;border-radius:8px;background:#fff;box-sizing:border-box}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .form-grid .full{grid-column:1/-1}
+    .error-list{background:#fff1f2;color:#9f1239;padding:10px;border-radius:8px;margin-bottom:12px}
+    .btn{padding:10px 14px;border-radius:8px;border:1px solid transparent;cursor:pointer;text-decoration:none}
+    .btn.primary{background:#2563eb;color:#fff}
+    .btn.ghost{background:transparent;border-color:#e6e9ef;color:#111827}
+    @media (max-width:720px){.form-grid{grid-template-columns:1fr}}
+  </style>
+
+  <header class="hero" style="padding:18px">
+    <div class="hero-inner">
+      <h1>Editar: <%= @property.title %></h1>
+      <p class="lead">Atualize os dados da propriedade e salve.</p>
+    </div>
+  </header>
+
+  <main class="form-area">
+    <% if @property.errors.any? %>
+      <div style="color:#b91c1c;margin-bottom:12px">
+        <strong>Erros:</strong>
+        <ul>
+          <% @property.errors.full_messages.each do |m| %>
+            <li><%= m %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: @property, local: true do |f| %>
+      <div class="form-grid">
+        <div>
+          <%= f.label :title %><br/>
+          <%= f.text_field :title, class: 'field-input' %>
+        </div>
+        <div>
+          <%= f.label :price_cents, "Preço (centavos)" %><br/>
+          <%= f.number_field :price_cents, value: @property.price_cents, min: 0, step: 1000, class: 'field-input' %>
+        </div>
+
+        <div>
+          <%= f.label :city %><br/>
+          <%= f.text_field :city, class: 'field-input' %>
+        </div>
+        <div>
+          <%= f.label :state %><br/>
+          <%= f.text_field :state, class: 'field-input' %>
+        </div>
+
+        <div class="full">
+          <%= f.label :address %><br/>
+          <%= f.text_field :address, class: 'field-input' %>
+        </div>
+
+        <div>
+          <%= f.label :zip %><br/>
+          <%= f.text_field :zip, class: 'field-input' %>
+        </div>
+
+        <div>
+          <%= f.label :status %><br/>
+          <%= f.select :status, Property.statuses.keys.map { |s| [s.humanize, s] }, {}, class: 'field-input' %>
+        </div>
+
+        <div class="full" style="margin-top:12px">
+          <%= f.submit 'Salvar', class: 'btn primary' %>
+          <%= link_to 'Cancelar', property_path(@property), class: 'btn ghost', style: 'margin-left:8px' %>
+        </div>
+      </div>
+    <% end %>
+  </main>
+</div>

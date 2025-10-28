@@ -1,0 +1,221 @@
+<div class="properties-app">
+	<header class="hero">
+		<div class="hero-inner">
+			<h1>Imobiliária</h1>
+			<p class="lead">Encontre seu próximo imóvel — pesquise por cidade ou preço.</p>
+			<div class="hero-actions">
+				<a href="<%= new_property_path %>" class="btn add" aria-label="Adicionar imóvel">
+					+ Adicionar Imóvel
+				</a>
+			</div>
+		</div>
+	</header>
+
+	<section class="controls">
+		<form id="filters-form" class="filters" onsubmit="return false;">
+			<div class="field">
+				<label for="city-input">Cidade</label>
+				<input id="city-input" name="city" type="search" placeholder="Ex: São Paulo" />
+			</div>
+
+			<div class="field">
+				<label for="price-input">Preço máximo (R$)</label>
+				<input id="price-input" name="max_price" type="number" min="0" step="1000" placeholder="Ex: 500000" />
+			</div>
+
+			<div class="actions">
+				<button id="search-btn" class="btn primary">Buscar</button>
+				<button id="clear-btn" class="btn ghost">Limpar</button>
+			</div>
+		</form>
+	</section>
+
+	<main>
+		<div id="properties-list" class="grid">
+			<p class="loading">Carregando propriedades...</p>
+		</div>
+	</main>
+</div>
+
+<style>
+/* Minimal modern styling for the properties index (updated filters styling) */
+:root{--bg:#f6f7fb;--card:#ffffff;--muted:#6b7280;--accent:#2563eb;--danger:#ef4444}
+body{font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;background:var(--bg);color:#111827;margin:0}
+.properties-app{max-width:1100px;margin:32px auto;padding:0 16px}
+.hero{background:linear-gradient(135deg,#eef2ff 0%,#ffffff 100%);padding:28px;border-radius:12px;box-shadow:0 4px 18px rgba(15,23,42,0.04);margin-bottom:20px}
+.hero-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hero-inner h1{margin:0;font-size:28px}
+.hero-inner .lead{margin:6px 0 0;color:var(--muted)}
+.hero-actions{display:flex;gap:8px}
+
+/* FILTERS - improved */
+.controls{margin:18px 0 26px}
+.filters{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  align-items:center;
+  background:#fff;
+  padding:12px;
+  border-radius:10px;
+  box-shadow:0 6px 20px rgba(2,6,23,0.03);
+  border:1px solid #eef2ff;
+}
+.field{display:flex;flex-direction:column;flex:1 1 220px;min-width:160px}
+.field label{font-size:12px;color:var(--muted);margin-bottom:6px}
+.field input{padding:10px 12px;border-radius:8px;border:1px solid #e6e9ef;background:white;box-sizing:border-box;width:100%}
+.actions{display:flex;gap:8px;align-items:center;margin-left:auto}
+.actions .btn{min-width:88px}
+
+/* Buttons */
+.btn{padding:10px 14px;border-radius:8px;border:1px solid transparent;cursor:pointer}
+.btn.primary{background:var(--accent);color:white}
+.btn.ghost{background:transparent;border-color:#e6e9ef;color:#111827}
+.btn.add{
+  background:linear-gradient(90deg,#06b6d4,#10b981);
+  color:#fff;
+  padding:10px 16px;
+  border-radius:10px;
+  font-weight:600;
+  box-shadow:0 6px 18px rgba(16,185,129,0.12);
+  border:1px solid rgba(0,0,0,0.04);
+  transition:transform .12s,box-shadow .12s,opacity .12s;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.btn.add:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(16,185,129,0.12)}
+
+/* Cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.card{background:var(--card);border-radius:12px;padding:14px;box-shadow:0 6px 20px rgba(2,6,23,0.04);transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(2,6,23,0.08)}
+.card a{color:inherit;text-decoration:none;display:block}
+.card-title{font-size:16px;margin:0 0 8px}
+.card-location{color:var(--muted);font-size:13px;margin:0 0 12px}
+.card-price{font-weight:600;margin:0 0 8px}
+.card-status{display:inline-block;padding:6px 8px;border-radius:999px;font-size:12px}
+.card-status.available{background:#ecfdf5;color:#065f46}
+.card-status.reserved{background:#fff7ed;color:#92400e}
+.card-status.sold{background:#fff1f2;color:#9f1239}
+.loading,.empty,.error{grid-column:1/-1;text-align:center;color:var(--muted);padding:30px 0}
+
+@media (max-width:640px){
+  .hero-inner{flex-direction:column;align-items:flex-start}
+  .hero-actions{width:100%;display:flex;justify-content:flex-start}
+  .btn.add{width:auto}
+  .filters{flex-direction:column;align-items:stretch}
+  .actions{justify-content:flex-start;margin-left:0}
+}
+</style>
+
+<script>
+(function() {
+  function initProperties() {
+    const listEl = document.getElementById('properties-list');
+    if (!listEl) return; // not on index page
+
+    const cityInput = document.getElementById('city-input');
+    const priceInput = document.getElementById('price-input');
+    const searchBtn = document.getElementById('search-btn');
+    const clearBtn = document.getElementById('clear-btn');
+    const form = document.getElementById('filters-form');
+
+    function formatPrice(cents) {
+      try {
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format((cents || 0) / 100);
+      } catch (e) {
+        return 'R$ ' + ((cents || 0) / 100).toFixed(2);
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str || '').replace(/[&<>'"]/g, function(c) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          "'": '&#39;',
+          '"': '&quot;'
+        }[c];
+      });
+    }
+
+    async function fetchAndRender() {
+      listEl.innerHTML = '<p class="loading">Carregando propriedades...</p>';
+      const params = new URLSearchParams();
+      if (cityInput && cityInput.value.trim()) params.set('city', cityInput.value.trim());
+      if (priceInput && priceInput.value) {
+        const cents = Math.round(Number(priceInput.value) * 100);
+        if (!Number.isNaN(cents)) params.set('max_price', cents);
+      }
+
+      const url = '/properties.json' + (params.toString() ? ('?' + params.toString()) : '');
+      try {
+        const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('Resposta inválida');
+        const data = await res.json();
+        renderProperties(data);
+      } catch (err) {
+        console.error(err);
+        listEl.innerHTML = '<p class="error">Erro ao carregar propriedades. Tente novamente mais tarde.</p>';
+      }
+    }
+
+    function renderProperties(props) {
+      if (!props || !props.length) {
+        listEl.innerHTML = '<p class="empty">Nenhuma propriedade encontrada.</p>';
+        return;
+      }
+      listEl.innerHTML = props.map(function(p) {
+        return `
+          <article class="card">
+            <a href="/properties/${p.id}">
+              <div class="card-body">
+                <h3 class="card-title">${escapeHtml(p.title)}</h3>
+                <p class="card-location">${escapeHtml(p.city)} — ${escapeHtml(p.state)}</p>
+                <p class="card-price">${formatPrice(p.price_cents)}</p>
+                <p class="card-status ${escapeHtml(p.status)}">${escapeHtml(p.status)}</p>
+              </div>
+            </a>
+          </article>
+        `;
+      }).join('');
+    }
+
+    // attach handlers once per element (guard using dataset)
+    if (searchBtn && !searchBtn.dataset._properties_listeners) {
+      searchBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        fetchAndRender();
+      });
+      searchBtn.dataset._properties_listeners = '1';
+    }
+
+    if (clearBtn && !clearBtn.dataset._properties_listeners) {
+      clearBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (cityInput) cityInput.value = '';
+        if (priceInput) priceInput.value = '';
+        fetchAndRender();
+      });
+      clearBtn.dataset._properties_listeners = '1';
+    }
+
+    if (form && !form.dataset._properties_listeners) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        fetchAndRender();
+      });
+      form.dataset._properties_listeners = '1';
+    }
+
+    // initial load
+    fetchAndRender();
+  }
+
+  document.addEventListener('DOMContentLoaded', initProperties);
+  document.addEventListener('turbo:load', initProperties);
+})();
+</script>

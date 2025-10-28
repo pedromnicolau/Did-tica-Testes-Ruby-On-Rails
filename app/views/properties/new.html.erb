@@ -1,0 +1,69 @@
+<div class="properties-app">
+  <style>
+    .properties-app{max-width:1100px;margin:32px auto;padding:0 16px;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;color:#111827}
+    .hero{background:linear-gradient(135deg,#eef2ff 0%, #ffffff 100%);padding:18px;border-radius:12px;box-shadow:0 4px 18px rgba(15,23,42,0.04)}
+    .hero-inner h1{margin:0;font-size:20px}
+    .hero-inner .lead{color:#6b7280;margin:6px 0 0}
+    main.form-area{width:100%;background:#fff;padding:18px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.04);box-sizing:border-box;margin-top:16px}
+    .field-input{width:100%;padding:10px 12px;border:1px solid #e6e9ef;border-radius:8px;background:#fff;box-sizing:border-box}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .form-grid .full{grid-column:1/-1}
+    .btn{padding:10px 14px;border-radius:8px;border:1px solid transparent;cursor:pointer;text-decoration:none}
+    .btn.primary{background:#2563eb;color:#fff}
+    .btn.ghost{background:transparent;border-color:#e6e9ef;color:#111827}
+    @media (max-width:720px){.form-grid{grid-template-columns:1fr}}
+  </style>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div>
+        <h1>Adicionar Imóvel</h1>
+        <p class="lead">Preencha os dados abaixo para cadastrar um novo imóvel.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="form-area">
+    <%= form_with model: @property, local: true do |f| %>
+      <div class="form-grid">
+        <div>
+          <%= f.label :title, "Title" %><br/>
+          <%= f.text_field :title, class: 'field-input' %>
+        </div>
+        <div>
+          <%= f.label :price_cents, "Price cents" %><br/>
+          <%= f.number_field :price_cents, min: 0, step: 1000, class: 'field-input' %>
+        </div>
+
+        <div>
+          <%= f.label :city, "City" %><br/>
+          <%= f.text_field :city, class: 'field-input' %>
+        </div>
+        <div>
+          <%= f.label :state, "State" %><br/>
+          <%= f.text_field :state, class: 'field-input' %>
+        </div>
+
+        <div class="full">
+          <%= f.label :address, "Address" %><br/>
+          <%= f.text_field :address, class: 'field-input' %>
+        </div>
+
+        <div>
+          <%= f.label :zip, "Zip" %><br/>
+          <%= f.text_field :zip, class: 'field-input' %>
+        </div>
+
+        <div>
+          <%= f.label :owner_id, "Owner" %><br/>
+          <%= f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true, class: 'field-input' %>
+        </div>
+
+        <div class="full" style="margin-top:12px">
+          <%= f.submit 'Create Property', class: 'btn primary' %>
+          <%= link_to 'Cancelar', properties_path, class: 'btn ghost', style: 'margin-left:8px' %>
+        </div>
+      </div>
+    <% end %>
+  </main>
+</div>
