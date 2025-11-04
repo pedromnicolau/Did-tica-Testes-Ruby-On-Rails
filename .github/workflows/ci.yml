@@ -25,4 +25,4 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
       - run: bin/rails db:prepare
-      - run: bin/rspec --format progress
+      - run: bundle exec rspec --format progress
