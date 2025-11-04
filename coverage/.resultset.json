@@ -1,199 +1,20 @@
 {
   "RSpec": {
     "coverage": {
-      "/home/pnicolau/fatec/realstate/app/helpers/application_helper.rb": {
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/controllers/application_controller.rb": {
         "lines": [
-          1,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/helpers/properties_helper.rb": {
-        "lines": [
-          1,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/jobs/send_welcome_email_job.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          1,
-          null,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/jobs/application_job.rb": {
-        "lines": [
-          1,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/mailers/lead_mailer.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          2,
-          2,
-          null,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/mailers/application_mailer.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/models/deal.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/models/application_record.rb": {
-        "lines": [
-          1,
-          1,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/models/lead.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/models/owner.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/models/property.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          1,
-          null,
-          1,
-          null,
-          1,
-          1,
-          null,
-          null,
-          3,
-          2,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/models/visit.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/services/commission_calculator.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          2,
-          null,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/services/via_cep.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          null,
-          null
-        ]
-      },
-      "/home/pnicolau/fatec/realstate/app/controllers/properties_controller.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          4,
-          4,
-          4,
-          null,
-          4,
-          4,
-          7,
-          null,
-          null,
-          null,
-          1,
-          1,
-          1,
-          1,
           0,
           null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          1,
-          1,
-          null,
-          null,
-          1,
-          3,
-          null,
-          3,
-          3,
-          3,
-          3,
-          null,
-          1,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/controllers/properties_controller.rb": {
+        "lines": [
           0,
           0,
           null,
-          2,
-          null,
-          null,
-          null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          1,
           0,
           0,
           0,
@@ -201,39 +22,234 @@
           null,
           0,
           0,
-          null,
-          null,
-          null,
-          null,
-          1,
-          0,
           0,
           0,
           0,
           null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           null,
+          0,
+          0,
+          0,
           null,
-          1,
+          0,
+          0,
           null,
-          1,
-          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           null,
+          0,
           null,
-          1,
-          3,
+          0,
           null,
-          null
-        ]
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
       },
-      "/home/pnicolau/fatec/realstate/app/controllers/application_controller.rb": {
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/helpers/application_helper.rb": {
         "lines": [
-          1,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/helpers/properties_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/jobs/application_job.rb": {
+        "lines": [
+          0,
           null,
-          1,
-          null
-        ]
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/jobs/send_welcome_email_job.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/mailers/application_mailer.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/mailers/lead_mailer.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/models/application_record.rb": {
+        "lines": [
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/models/deal.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/models/lead.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/models/owner.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/models/property.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/models/visit.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/services/commission_calculator.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/home/pedro/fatec/Did-tica-Testes-Ruby-On-Rails/app/services/via_cep.rb": {
+        "lines": [
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
       }
     },
-    "timestamp": 1761619461
+    "timestamp": 1762257922
   }
 }

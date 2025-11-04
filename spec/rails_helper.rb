@@ -44,3 +44,28 @@ VCR.configure do |c|
   c.hook_into :webmock
   c.allow_http_connections_when_no_cassette = true  # added: allow local/other requests when no cassette
 end
+
+# Configure Capybara
+Capybara.register_driver :headless_chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--disable-gpu')
+  options.add_argument('--window-size=1400,1400')
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
+# Configure system tests
+RSpec.configure do |config|
+  # ...existing code...
+
+  config.before(:each, type: :system) do
+    if ENV['CI']
+      driven_by :headless_chrome
+    else
+      driven_by :selenium_chrome_headless
+    end
+  end
+end
