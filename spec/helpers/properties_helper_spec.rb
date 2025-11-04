@@ -1,15 +1,14 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the PropertiesHelper. For example:
-#
-# describe PropertiesHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe PropertiesHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#property_full_address' do
+    it 'concatena address, city e state' do
+      property = build(:property, address: 'Rua A, 123', city: 'Araras', state: 'SP')
+      expect(helper.property_full_address(property)).to eq('Rua A, 123, Araras - SP')
+    end
+
+    it 'retorna vazio quando nil' do
+      expect(helper.property_full_address(nil)).to eq('')
+    end
+  end
 end
