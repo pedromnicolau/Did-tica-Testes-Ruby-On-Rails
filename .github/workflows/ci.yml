@@ -19,7 +19,7 @@ jobs:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/realestate_test
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
